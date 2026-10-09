@@ -1,0 +1,595 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#24553d">
+<meta name="description" content="خبزنا Khobzna - مشروع تثمين الخبز اليابس وإعادة تدويره">
+<title>Khobzna | خبزنا</title>
+
+<style>
+:root {
+  --green: #24553d;
+  --green2: #397b55;
+  --gold: #e8b45d;
+  --cream: #fff9ef;
+  --ink: #25352b;
+  --muted: #6d786f;
+  --white: #fff;
+  --shadow: 0 12px 35px #1b392515;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Arial, Tahoma, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.8;
+}
+button, select { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+.container { width: min(1160px, 90%); margin: auto; }
+
+header {
+  position: sticky; top: 0; z-index: 50;
+  background: #fffaf2f5;
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid #eae5d9;
+}
+.navbar {
+  min-height: 82px;
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 20px;
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand svg { width: 52px; height: 52px; flex-shrink: 0; }
+.brand-name {
+  color: var(--green); font-size: 27px;
+  font-weight: 900; letter-spacing: -.8px;
+}
+.brand-caption { font-size: 11px; color: var(--muted); line-height: 1.3; }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+nav { display: flex; align-items: center; gap: 6px; }
+nav button {
+  border: 0; background: transparent; color: var(--ink);
+  padding: 10px 15px; border-radius: 25px; font-weight: 700;
+}
+nav button:hover, nav button.active {
+  background: var(--green); color: white;
+}
+.language {
+  border: 1px solid #d9dfd5; border-radius: 12px;
+  padding: 9px 10px; background: white; color: var(--green);
+  font-weight: 700; max-width: 130px;
+}
+.page { display: none; }
+.page.active { display: block; animation: fade .35s ease; }
+@keyframes fade {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero {
+  min-height: 610px; display: flex; align-items: center;
+  color: white; position: relative; overflow: hidden;
+  background:
+    linear-gradient(90deg, #173b2be8, #173b2b80),
+    url("https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1900&q=85")
+    center/cover no-repeat;
+}
+html[dir="rtl"] .hero {
+  background:
+    linear-gradient(270deg, #173b2be8, #173b2b80),
+    url("https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1900&q=85")
+    center/cover no-repeat;
+}
+.hero-content { max-width: 760px; padding: 85px 0; }
+.eyebrow {
+  display: inline-block; padding: 6px 15px;
+  border: 1px solid #ffffff80; border-radius: 30px;
+  background: #ffffff18; margin-bottom: 22px; font-size: 14px;
+}
+.hero h1 {
+  font-size: clamp(38px, 6vw, 70px);
+  line-height: 1.2; margin-bottom: 22px;
+}
+.hero h1 span { color: var(--gold); }
+.hero p { font-size: 18px; color: #f4f4eb; max-width: 650px; margin-bottom: 28px; }
+.buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; justify-content: center; align-items: center;
+  padding: 13px 23px; border-radius: 30px; border: 0;
+  background: var(--gold); color: #203b2b;
+  font-weight: 800; transition: .2s;
+}
+.btn:hover { transform: translateY(-3px); filter: brightness(1.04); }
+.btn.secondary { background: transparent; border: 1px solid white; color: white; }
+
+.section { padding: 78px 0; }
+.section.soft { background: #f3f0e5; }
+.section-heading { text-align: center; margin-bottom: 38px; }
+.section-heading h2 { color: var(--green); font-size: clamp(28px, 4vw, 41px); margin-bottom: 9px; }
+.section-heading p { color: var(--muted); }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.card {
+  padding: 28px; background: white; border: 1px solid #e9e5da;
+  border-radius: 22px; box-shadow: 0 8px 24px #1b39250a;
+  transition: .25s;
+}
+.card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.card-icon {
+  width: 62px; height: 62px; border-radius: 18px;
+  display: grid; place-items: center; font-size: 30px;
+  background: #e9f1e7; margin-bottom: 17px;
+}
+.card h3 { color: var(--green); font-size: 21px; margin-bottom: 9px; }
+.card p { color: var(--muted); font-size: 15px; }
+.banner { padding: 58px 5%; background: var(--green); color: white; text-align: center; }
+.banner h2 { font-size: clamp(27px, 4vw, 37px); margin-bottom: 10px; }
+.banner p { color: #e0e9df; max-width: 750px; margin: 0 auto 22px; }
+.banner .btn { background: var(--cream); }
+
+.page-heading {
+  padding: 70px 0; color: white; text-align: center;
+  background: linear-gradient(#204b36dc,#204b36dc),
+    url("https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1500&q=80")
+    center/cover;
+}
+.page-heading h1 { font-size: clamp(34px, 5vw, 50px); }
+.page-heading p { color: #f2f0e7; margin-top: 8px; }
+
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 38px;
+}
+.about-image {
+  min-height: 360px; border-radius: 24px;
+  background: url("https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=1000&q=85")
+    center/cover;
+}
+.about-copy h2 { color: var(--green); font-size: 32px; margin-bottom: 14px; }
+.about-copy p { color: var(--muted); margin-bottom: 14px; }
+.steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+.step { padding: 22px; border-radius: 18px; background: white; border: 1px solid #e9e5da; }
+.step-number { font-size: 30px; font-weight: 900; color: var(--gold); }
+.step h3 { color: var(--green); margin: 7px 0; }
+.step p { font-size: 14px; color: var(--muted); }
+
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.contact-card { padding: 28px; background: white; border-radius: 20px; border: 1px solid #e9e5da; }
+.contact-card h3 { color: var(--green); font-size: 23px; margin-bottom: 14px; }
+.contact-card p { margin: 10px 0; overflow-wrap: anywhere; }
+.contact-card a:not(.social) { color: var(--green2); }
+.map { width: 100%; height: 310px; border: 0; border-radius: 15px; margin-top: 16px; }
+.socials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.social {
+  background: #e9f1e7; color: var(--green);
+  padding: 8px 14px; border-radius: 25px; font-weight: 700;
+}
+.small-note { font-size: 12px; color: var(--muted); margin-top: 18px; }
+footer { background: #193d2b; color: white; padding: 32px 0; text-align: center; }
+footer .brand { justify-content: center; margin-bottom: 8px; }
+footer .brand-name { color: white; }
+footer .brand-caption { color: #dce5dc; }
+footer p { color: #dce5dc; font-size: 13px; }
+
+@media(max-width: 850px) {
+  .navbar { padding: 12px 0; flex-wrap: wrap; justify-content: center; }
+  .nav-actions { flex-wrap: wrap; justify-content: center; }
+  .cards { grid-template-columns: 1fr 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .hero { min-height: 540px; }
+}
+@media(max-width: 560px) {
+  .navbar { gap: 10px; }
+  .nav-actions { gap: 6px; }
+  nav { flex-wrap: wrap; justify-content: center; }
+  nav button { padding: 9px 11px; font-size: 13px; }
+  .brand-name { font-size: 24px; }
+  .brand svg { width: 45px; height: 45px; }
+  .cards, .steps { grid-template-columns: 1fr; }
+  .hero { min-height: 570px; }
+  .hero p { font-size: 16px; }
+  .section { padding: 55px 0; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container navbar">
+    <a class="brand" href="#" onclick="showPage('home');return false;" aria-label="Khobzna">
+      <!-- شعار أصلي مرسوم داخل الكود -->
+      <svg viewBox="0 0 100 100" role="img" aria-label="Khobzna logo">
+        <circle cx="50" cy="50" r="48" fill="#24553d"/>
+        <path d="M22 57 C19 43 29 29 44 29 C57 19 76 30 79 44
+                 C82 54 76 64 69 69 L32 69 C27 66 24 62 22 57Z"
+              fill="#e8b45d" stroke="#fff3d8" stroke-width="3"/>
+        <path d="M39 36 Q33 44 35 49 M53 32 Q47 40 49 46 M67 38 Q60 44 62 50"
+              fill="none" stroke="#fff3d8" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M28 76 Q50 87 72 76" fill="none" stroke="#b9d7a7"
+              stroke-width="4" stroke-linecap="round"/>
+        <path d="M28 76 L29 66 M28 76 L39 75" fill="none" stroke="#b9d7a7"
+              stroke-width="4" stroke-linecap="round"/>
+        <path d="M72 76 L71 66 M72 76 L61 75" fill="none" stroke="#b9d7a7"
+              stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <span>
+        <span class="brand-name">Khobzna</span>
+        <span class="brand-caption" data-i18n="brandTag">نحو حياة ثانية للخبز</span>
+      </span>
+    </a>
+
+    <div class="nav-actions">
+      <nav>
+        <button id="navHome" class="active" onclick="showPage('home')" data-i18n="navHome">الرئيسية</button>
+        <button id="navProject" onclick="showPage('project')" data-i18n="navProject">مشروعنا</button>
+      </nav>
+      <select class="language" id="languageSelect" aria-label="اختيار اللغة">
+        <option value="ar">العربية</option>
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- الصفحة الأولى -->
+  <div id="home" class="page active">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <span class="eyebrow" data-i18n="eyebrow">♻ مشروع بيئي واقتصادي</span>
+          <h1 data-i18n="heroTitle">من الخبز اليابس<br>نصنع <span>قيمة جديدة</span></h1>
+          <p data-i18n="heroText">
+            خبزنا مشروع يهدف إلى جمع الخبز غير المستعمل وإعادة تثمينه،
+            لتقليل التبذير وخلق موارد مفيدة بطريقة مسؤولة.
+          </p>
+          <div class="buttons">
+            <button class="btn" onclick="showPage('project')" data-i18n="discover">اكتشفوا مشروعنا ←</button>
+            <button class="btn secondary" onclick="document.getElementById('mission').scrollIntoView()" data-i18n="ourMission">رسالتنا</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="mission">
+      <div class="container">
+        <div class="section-heading">
+          <h2 data-i18n="missionTitle">رسالتنا</h2>
+          <p data-i18n="missionSubtitle">نحوّل الخبز المهدور إلى فرصة جديدة.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="card-icon">🍞</div>
+            <h3 data-i18n="collectTitle">جمع الخبز</h3>
+            <p data-i18n="collectText">جمع الخبز اليابس من المطاعم والمدارس والمحلات والشركاء.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">♻️</div>
+            <h3 data-i18n="recycleTitle">إعادة التثمين</h3>
+            <p data-i18n="recycleText">فرز الخبز وتحضيره وتوجيهه إلى مسارات التثمين المناسبة.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">🌱</div>
+            <h3 data-i18n="environmentTitle">حماية البيئة</h3>
+            <p data-i18n="environmentText">الحد من التبذير وتشجيع اقتصاد دائري أكثر استدامة.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="banner">
+      <div class="container">
+        <h2 data-i18n="bannerTitle">كل قطعة خبز لها قيمة!</h2>
+        <p data-i18n="bannerText">معاً نمنح الخبز حياة ثانية ونساهم في مستقبل أكثر استدامة.</p>
+        <button class="btn" onclick="showPage('project')" data-i18n="learnMore">اعرفوا المزيد</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- الصفحة الثانية -->
+  <div id="project" class="page">
+    <section class="page-heading">
+      <div class="container">
+        <h1 data-i18n="projectTitle">مشروع خبزنا</h1>
+        <p data-i18n="projectSubtitle">فكرة مبتكرة للحد من تبذير الخبز وإعادة استعماله.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container about-grid">
+        <div class="about-image" role="img" data-i18n-aria="breadImage"></div>
+        <div class="about-copy">
+          <h2 data-i18n="whyTitle">لماذا خبزنا؟</h2>
+          <p data-i18n="whyText1">تُرمى كميات من الخبز يومياً رغم إمكانية الاستفادة منها في مسارات مناسبة.</p>
+          <p data-i18n="whyText2">يقترح مشروعنا نظاماً منظماً لجمع الخبز من المطاعم والمدارس والمحلات وغيرها، ثم فرزه وتحضيره للتثمين.</p>
+          <p data-i18n="whyText3">نطمح إلى إطلاق مبادرة محلية في الجزائر تجمع بين حماية البيئة وخلق فرص اقتصادية جديدة.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section soft">
+      <div class="container">
+        <div class="section-heading">
+          <h2 data-i18n="productsTitle">مسارا التثمين</h2>
+          <p data-i18n="productsSubtitle">يُحدَّد الاستعمال النهائي حسب جودة الخبز وشروط السلامة.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="card-icon">🌾</div>
+            <h3 data-i18n="productOneTitle">مسحوق الخبز وفتات الخبز</h3>
+            <p data-i18n="productOneText">تحضير الخبز المناسب وتحويله إلى فتات أو مسحوق، وفق شروط النظافة والاستعمال النهائي.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">🐄</div>
+            <h3 data-i18n="productTwoTitle">التثمين في الأعلاف</h3>
+            <p data-i18n="productTwoText">توجيه الخبز المناسب إلى مسار الأعلاف بعد التحقق من سلامته وملاءمته للتغذية الحيوانية.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">🤝</div>
+            <h3 data-i18n="partnersTitle">شراكات محلية</h3>
+            <p data-i18n="partnersText">التعاون مع المطاعم والمدارس والمحلات والجامعين والمهنيين المعنيين.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <h2 data-i18n="stepsTitle">كيف يعمل المشروع؟</h2>
+          <p data-i18n="stepsSubtitle">أربع مراحل أساسية في عملية التثمين.</p>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <div class="step-number">01</div>
+            <h3 data-i18n="step1Title">الجمع</h3>
+            <p data-i18n="step1Text">استلام الخبز من الشركاء.</p>
+          </article>
+          <article class="step">
+            <div class="step-number">02</div>
+            <h3 data-i18n="step2Title">الفرز والمراقبة</h3>
+            <p data-i18n="step2Text">التحقق من الجودة واستبعاد الخبز غير المناسب.</p>
+          </article>
+          <article class="step">
+            <div class="step-number">03</div>
+            <h3 data-i18n="step3Title">التحضير</h3>
+            <p data-i18n="step3Text">تحضير الخبز وفق شروط كل مسار.</p>
+          </article>
+          <article class="step">
+            <div class="step-number">04</div>
+            <h3 data-i18n="step4Title">التثمين</h3>
+            <p data-i18n="step4Text">توجيهه إلى استعمال مناسب وآمن.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="banner">
+      <div class="container">
+        <h2 data-i18n="goalTitle">هدفنا</h2>
+        <p data-i18n="goalText">تقليل تبذير الخبز، خلق قيمة اقتصادية والمساهمة في اقتصاد دائري محلي.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <h2 data-i18n="contactTitle">الموقع والتواصل</h2>
+          <p data-i18n="contactSubtitle">مشروعنا يستهدف منطقة مستغانم، الجزائر.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3 data-i18n="locationTitle">📍 منطقة المشروع</h3>
+            <p data-i18n="locationText">مستغانم، الجزائر</p>
+            <iframe class="map"
+              src="https://maps.google.com/maps?q=Mostaganem%2C%20Algeria&output=embed"
+              loading="lazy" title="خريطة مستغانم"></iframe>
+          </div>
+
+          <div class="contact-card">
+            <h3 data-i18n="contactUs">📩 تواصلوا معنا</h3>
+            <p data-i18n="contactText">هل أنتم مطعم أو مدرسة أو محل أو شريك محتمل؟ يسعدنا التواصل معكم.</p>
+            <p><strong data-i18n="phoneLabel">الهاتف:</strong> <a href="tel:+213000000000">+213 XX XX XX XX</a></p>
+            <p><strong data-i18n="emailLabel">البريد الإلكتروني:</strong> <a href="mailto:contact@khobzna.dz">contact@khobzna.dz</a></p>
+            <div class="socials">
+              <a class="social" href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
+              <a class="social" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+              <a class="social" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+            <p class="small-note" data-i18n="placeholderNote">ملاحظة: يجب استبدال رقم الهاتف والبريد وروابط التواصل بمعلوماتكم الحقيقية.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="brand">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="48" fill="#397b55"/>
+        <path d="M22 57 C19 43 29 29 44 29 C57 19 76 30 79 44 C82 54 76 64 69 69 L32 69 C27 66 24 62 22 57Z"
+              fill="#e8b45d" stroke="#fff3d8" stroke-width="3"/>
+        <path d="M39 36 Q33 44 35 49 M53 32 Q47 40 49 46 M67 38 Q60 44 62 50"
+              fill="none" stroke="#fff3d8" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M28 76 Q50 87 72 76" fill="none" stroke="#b9d7a7" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <span>
+        <span class="brand-name">Khobzna</span>
+        <span class="brand-caption" data-i18n="brandTag">نحو حياة ثانية للخبز</span>
+      </span>
+    </div>
+    <p data-i18n="footerLine">من الخبز اليابس نصنع قيمة جديدة.</p>
+    <p>© <span id="year"></span> Khobzna</p>
+  </div>
+</footer>
+
+<script>
+const translations = {
+  ar: {
+    brandTag:"نحو حياة ثانية للخبز",
+    navHome:"الرئيسية", navProject:"مشروعنا",
+    eyebrow:"♻ مشروع بيئي واقتصادي",
+    heroTitle:'من الخبز اليابس<br>نصنع <span>قيمة جديدة</span>',
+    heroText:"خبزنا مشروع يهدف إلى جمع الخبز غير المستعمل وإعادة تثمينه، لتقليل التبذير وخلق موارد مفيدة بطريقة مسؤولة.",
+    discover:"اكتشفوا مشروعنا ←", ourMission:"رسالتنا",
+    missionTitle:"رسالتنا", missionSubtitle:"نحوّل الخبز المهدور إلى فرصة جديدة.",
+    collectTitle:"جمع الخبز", collectText:"جمع الخبز اليابس من المطاعم والمدارس والمحلات والشركاء.",
+    recycleTitle:"إعادة التثمين", recycleText:"فرز الخبز وتحضيره وتوجيهه إلى مسارات التثمين المناسبة.",
+    environmentTitle:"حماية البيئة", environmentText:"الحد من التبذير وتشجيع اقتصاد دائري أكثر استدامة.",
+    bannerTitle:"كل قطعة خبز لها قيمة!", bannerText:"معاً نمنح الخبز حياة ثانية ونساهم في مستقبل أكثر استدامة.",
+    learnMore:"اعرفوا المزيد",
+    projectTitle:"مشروع خبزنا", projectSubtitle:"فكرة مبتكرة للحد من تبذير الخبز وإعادة استعماله.",
+    whyTitle:"لماذا خبزنا؟",
+    whyText1:"تُرمى كميات من الخبز يومياً رغم إمكانية الاستفادة منها في مسارات مناسبة.",
+    whyText2:"يقترح مشروعنا نظاماً منظماً لجمع الخبز من المطاعم والمدارس والمحلات وغيرها، ثم فرزه وتحضيره للتثمين.",
+    whyText3:"نطمح إلى إطلاق مبادرة محلية في الجزائر تجمع بين حماية البيئة وخلق فرص اقتصادية جديدة.",
+    productsTitle:"مسارا التثمين", productsSubtitle:"يُحدَّد الاستعمال النهائي حسب جودة الخبز وشروط السلامة.",
+    productOneTitle:"مسحوق الخبز وفتات الخبز", productOneText:"تحضير الخبز المناسب وتحويله إلى فتات أو مسحوق، وفق شروط النظافة والاستعمال النهائي.",
+    productTwoTitle:"التثمين في الأعلاف", productTwoText:"توجيه الخبز المناسب إلى مسار الأعلاف بعد التحقق من سلامته وملاءمته للتغذية الحيوانية.",
+    partnersTitle:"شراكات محلية", partnersText:"التعاون مع المطاعم والمدارس والمحلات والجامعين والمهنيين المعنيين.",
+    stepsTitle:"كيف يعمل المشروع؟", stepsSubtitle:"أربع مراحل أساسية في عملية التثمين.",
+    step1Title:"الجمع", step1Text:"استلام الخبز من الشركاء.",
+    step2Title:"الفرز والمراقبة", step2Text:"التحقق من الجودة واستبعاد الخبز غير المناسب.",
+    step3Title:"التحضير", step3Text:"تحضير الخبز وفق شروط كل مسار.",
+    step4Title:"التثمين", step4Text:"توجيهه إلى استعمال مناسب وآمن.",
+    goalTitle:"هدفنا", goalText:"تقليل تبذير الخبز، خلق قيمة اقتصادية والمساهمة في اقتصاد دائري محلي.",
+    contactTitle:"الموقع والتواصل", contactSubtitle:"مشروعنا يستهدف منطقة مستغانم، الجزائر.",
+    locationTitle:"📍 منطقة المشروع", locationText:"مستغانم، الجزائر",
+    contactUs:"📩 تواصلوا معنا", contactText:"هل أنتم مطعم أو مدرسة أو محل أو شريك محتمل؟ يسعدنا التواصل معكم.",
+    phoneLabel:"الهاتف:", emailLabel:"البريد الإلكتروني:",
+    placeholderNote:"ملاحظة: يجب استبدال رقم الهاتف والبريد وروابط التواصل بمعلوماتكم الحقيقية.",
+    footerLine:"من الخبز اليابس نصنع قيمة جديدة.", breadImage:"صورة للخبز"
+  },
+  fr: {
+    brandTag:"Une seconde vie pour le pain",
+    navHome:"Accueil", navProject:"Notre projet",
+    eyebrow:"♻ Projet écologique et économique",
+    heroTitle:'Du pain récupéré,<br>une <span>nouvelle valeur</span>',
+    heroText:"Khobzna est un projet de collecte et de valorisation du pain inutilisé afin de réduire le gaspillage et de créer de nouvelles ressources.",
+    discover:"Découvrir notre projet →", ourMission:"Notre mission",
+    missionTitle:"Notre mission", missionSubtitle:"Transformer le pain gaspillé en une nouvelle opportunité.",
+    collectTitle:"Collecte du pain", collectText:"Récupérer le pain auprès des restaurants, des écoles, des commerces et des partenaires.",
+    recycleTitle:"Valorisation", recycleText:"Trier et préparer le pain pour l'orienter vers des filières adaptées.",
+    environmentTitle:"Protéger l'environnement", environmentText:"Réduire le gaspillage et encourager une économie circulaire durable.",
+    bannerTitle:"Chaque morceau de pain compte !", bannerText:"Ensemble, donnons une seconde vie au pain pour un avenir plus durable.",
+    learnMore:"En savoir plus",
+    projectTitle:"Notre projet Khobzna", projectSubtitle:"Une idée innovante pour réduire le gaspillage du pain.",
+    whyTitle:"Pourquoi Khobzna ?",
+    whyText1:"Chaque jour, du pain est jeté alors qu'il pourrait être valorisé dans des filières appropriées.",
+    whyText2:"Notre projet propose une collecte organisée auprès des restaurants, écoles, commerces et autres partenaires, suivie d'un tri et d'une préparation.",
+    whyText3:"Nous souhaitons développer en Algérie une initiative locale qui associe protection de l'environnement et nouvelles opportunités économiques.",
+    productsTitle:"Nos filières de valorisation", productsSubtitle:"L'usage final dépend de la qualité du pain et des conditions de sécurité.",
+    productOneTitle:"Chapelure et poudre de pain", productOneText:"Préparer le pain adapté et le transformer en chapelure ou en poudre dans le respect des règles d'hygiène.",
+    productTwoTitle:"Valorisation en alimentation animale", productTwoText:"Orienter le pain approprié vers une filière d'alimentation animale après vérification de sa sécurité et de son adéquation.",
+    partnersTitle:"Partenariats locaux", partnersText:"Collaborer avec les restaurants, les écoles, les commerces, les collecteurs et les professionnels concernés.",
+    stepsTitle:"Comment fonctionne le projet ?", stepsSubtitle:"Quatre étapes principales de valorisation.",
+    step1Title:"Collecte", step1Text:"Récupération du pain auprès des partenaires.",
+    step2Title:"Tri et contrôle", step2Text:"Vérifier la qualité et écarter le pain inadapté.",
+    step3Title:"Préparation", step3Text:"Préparer le pain selon les exigences de chaque filière.",
+    step4Title:"Valorisation", step4Text:"Orienter le pain vers un usage adapté et sûr.",
+    goalTitle:"Notre objectif", goalText:"Réduire le gaspillage, créer de la valeur économique et contribuer à une économie circulaire locale.",
+    contactTitle:"Localisation et contact", contactSubtitle:"Notre projet cible la région de Mostaganem, en Algérie.",
+    locationTitle:"📍 Zone du projet", locationText:"Mostaganem, Algérie",
+    contactUs:"📩 Contactez-nous", contactText:"Vous êtes un restaurant, une école, un commerce ou un partenaire potentiel ? Contactez-nous.",
+    phoneLabel:"Téléphone :", emailLabel:"E-mail :",
+    placeholderNote:"Remplacez le numéro, l'adresse e-mail et les liens sociaux par vos informations réelles.",
+    footerLine:"Du pain récupéré, une nouvelle valeur.", breadImage:"Photo de pain"
+  },
+  en: {
+    brandTag:"Giving bread a second life",
+    navHome:"Home", navProject:"Our project",
+    eyebrow:"♻ Environmental and economic project",
+    heroTitle:'From leftover bread<br>to <span>new value</span>',
+    heroText:"Khobzna is a project that collects and valorizes unused bread to reduce waste and create useful resources responsibly.",
+    discover:"Discover our project →", ourMission:"Our mission",
+    missionTitle:"Our mission", missionSubtitle:"Turning wasted bread into a new opportunity.",
+    collectTitle:"Bread collection", collectText:"Collecting leftover bread from restaurants, schools, shops and partners.",
+    recycleTitle:"Resource recovery", recycleText:"Sorting and preparing bread for suitable recovery pathways.",
+    environmentTitle:"Protect the environment", environmentText:"Reducing waste and supporting a more sustainable circular economy.",
+    bannerTitle:"Every piece of bread has value!", bannerText:"Together, we can give bread a second life and help build a more sustainable future.",
+    learnMore:"Learn more",
+    projectTitle:"Our Khobzna project", projectSubtitle:"An innovative idea to reduce bread waste and recover resources.",
+    whyTitle:"Why Khobzna?",
+    whyText1:"Bread is thrown away every day, even though some of it may be suitable for responsible recovery.",
+    whyText2:"Our project proposes an organized collection system with restaurants, schools, shops and other partners, followed by sorting and preparation.",
+    whyText3:"We aim to develop a local initiative in Algeria that combines environmental protection with new economic opportunities.",
+    productsTitle:"Our recovery pathways", productsSubtitle:"The final use depends on bread quality and safety requirements.",
+    productOneTitle:"Breadcrumbs and bread powder", productOneText:"Suitable bread may be prepared and processed into breadcrumbs or bread powder under appropriate hygiene conditions.",
+    productTwoTitle:"Animal-feed recovery", productTwoText:"Suitable bread may enter an animal-feed pathway only after its safety and suitability have been verified.",
+    partnersTitle:"Local partnerships", partnersText:"Working with restaurants, schools, shops, collectors and relevant professionals.",
+    stepsTitle:"How does the project work?", stepsSubtitle:"Four main stages in the recovery process.",
+    step1Title:"Collection", step1Text:"Collecting bread from partners.",
+    step2Title:"Sorting and checks", step2Text:"Checking quality and removing unsuitable bread.",
+    step3Title:"Preparation", step3Text:"Preparing bread according to each pathway's requirements.",
+    step4Title:"Recovery", step4Text:"Directing it to an appropriate and safe use.",
+    goalTitle:"Our goal", goalText:"Reduce bread waste, create economic value and contribute to a local circular economy.",
+    contactTitle:"Location and contact", contactSubtitle:"Our project focuses on Mostaganem, Algeria.",
+    locationTitle:"📍 Project area", locationText:"Mostaganem, Algeria",
+    contactUs:"📩 Contact us", contactText:"Are you a restaurant, school, shop or potential partner? We would love to hear from you.",
+    phoneLabel:"Phone:", emailLabel:"Email:",
+    placeholderNote:"Replace the phone number, email and social links with your real contact details.",
+    footerLine:"From leftover bread to new value.", breadImage:"Photo of bread"
+  }
+};
+
+function setLanguage(lang) {
+  const dict = translations[lang] || translations.ar;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
+  document.querySelectorAll("[data-i18n]").forEach(function(el) {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+
+  document.querySelectorAll("[data-i18n-aria]").forEach(function(el) {
+    const key = el.getAttribute("data-i18n-aria");
+    if (dict[key] !== undefined) el.setAttribute("aria-label", dict[key]);
+  });
+
+  document.title = lang === "ar" ? "Khobzna | خبزنا"
+    : lang === "fr" ? "Khobzna | Valorisation du pain"
+    : "Khobzna | Bread Recovery";
+
+  document.getElementById("languageSelect").value = lang;
+  try { localStorage.setItem("khobzna-language", lang); } catch(e) {}
+}
+
+function showPage(pageId) {
+  document.querySelectorAll(".page").forEach(function(page) {
+    page.classList.remove("active");
+  });
+  document.getElementById(pageId).classList.add("active");
+
+  document.getElementById("navHome").classList.toggle("active", pageId === "home");
+  document.getElementById("navProject").classList.toggle("active", pageId === "project");
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("languageSelect").addEventListener("change", function(event) {
+  setLanguage(event.target.value);
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+let savedLanguage = "ar";
+try {
+  const saved = localStorage.getItem("khobzna-language");
+  if (saved && translations[saved]) savedLanguage = saved;
+} catch(e) {}
+setLanguage(savedLanguage);
+</script>
+
+</body>
+</html>
